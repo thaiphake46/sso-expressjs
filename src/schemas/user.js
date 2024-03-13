@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const DOCUMENT_NAME = 'User'
 
 const userSchema = new mongoose.Schema({
-  displayName: {
+  username: {
     type: String,
     required: true,
     trim: true,
@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  email_verified: {
-    type: Boolean,
-    default: false,
-  },
+  // email_verified: {
+  //   type: Boolean,
+  //   default: false,
+  // },
   password: {
     type: String,
   },

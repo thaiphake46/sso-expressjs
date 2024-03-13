@@ -11,6 +11,7 @@ const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 const { findUserByEmail } = require('~/services/userService')
 const bcrypt = require('bcrypt')
+const MongoStore = require('connect-mongo')
 
 /**
  * @param {express.Express} app
@@ -28,7 +29,7 @@ function appConfig(app) {
   app.set('views', path.join(process.cwd(), 'src/views'))
 
   // connect mongo
-  const mongoInstance = new ConnectMongo()
+  new ConnectMongo()
 
   // express session config
   app.use(
@@ -36,6 +37,12 @@ function appConfig(app) {
       secret: env.EXPRESS_SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: env.MONGODB_URI,
+      }),
+      cookie: {
+        maxAge: env.EXPRESS_SESSION_COOKIE_MAX_AGE,
+      },
     }),
   )
 

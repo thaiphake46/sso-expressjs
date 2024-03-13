@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
 const env = require('./env')
 
-const MONGO_CONNECT_STRING = env.MONGO_CONNECT_STRING
+const MONGODB_URI = env.MONGODB_URI
 
 class ConnectMongo {
   constructor() {
-    this.connect()
+    this._connect()
   }
 
-  connect = function () {
+  _connect() {
     mongoose
-      .connect(MONGO_CONNECT_STRING)
+      .connect(MONGODB_URI)
       .then(() => {
         // eslint-disable-next-line no-console
         console.log(`- Mongo connection successful`)
@@ -18,14 +18,6 @@ class ConnectMongo {
       .catch((err) => {
         throw err
       })
-  }
-
-  static getInstance = function () {
-    if (!ConnectMongo.instance) {
-      ConnectMongo.instance = new ConnectMongo()
-    }
-
-    return ConnectMongo.instance
   }
 }
 
