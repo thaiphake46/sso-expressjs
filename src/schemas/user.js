@@ -3,12 +3,10 @@ const mongoose = require('mongoose')
 const DOCUMENT_NAME = 'User'
 
 const userSchema = new mongoose.Schema({
-  username: {
+  fullName: {
     type: String,
     required: true,
     trim: true,
-    minlength: 3,
-    maxlength: 20,
   },
   email: {
     type: String,
@@ -16,13 +14,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  // email_verified: {
-  //   type: Boolean,
-  //   default: false,
-  // },
-  password: {
-    type: String,
+  email_verified: {
+    type: Boolean,
+    default: false,
   },
+  password: { type: String },
+  avatar: { type: String },
+  googleId: { type: String },
 })
 
 const User = mongoose.model(DOCUMENT_NAME, userSchema)

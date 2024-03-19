@@ -7,17 +7,15 @@ const ConnectMongo = require('./ConnectMongo')
 const path = require('path')
 const session = require('express-session')
 const env = require('./env')
-const passport = require('passport')
-const { Strategy: LocalStrategy } = require('passport-local')
-const { findUserByEmail } = require('~/services/userService')
-const bcrypt = require('bcrypt')
 const MongoStore = require('connect-mongo')
+const appPassport = require('./passport')
+const passport = require('passport')
 
 /**
  * @param {express.Express} app
  */
 function appConfig(app) {
-  app.use(cors())
+  app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
   app.use(helmet())
   app.use(morgan('dev'))
   app.use(compression())
@@ -49,42 +47,7 @@ function appConfig(app) {
   // passport config
   app.use(passport.initialize())
   app.use(passport.session())
-
-  // passport local config
-  passport.use(
-    new LocalStrategy(
-      { usernameField: 'email', passwordField: 'password', passReqToCallback: true },
-      async (req, email, password, done) => {
-        try {
-          const user = await findUserByEmail(email)
-
-          if (!user || !bcrypt.compareSync(password, user?.password)) {
-            done(null, false, { message: 'Username or password incorrect' })
-          }
-
-          done(null, user)
-        } catch (error) {
-          done(error)
-        }
-      },
-    ),
-  )
-
-  passport.serializeUser((user, done) => {
-    done(null, user.email)
-  })
-
-  passport.deserializeUser(async (email, done) => {
-    try {
-      const user = await findUserByEmail(email)
-
-      if (!user) done(null, false)
-
-      done(null, user)
-    } catch (error) {
-      done(error)
-    }
-  })
+  appPassport()
 }
 
 module.exports = appConfig

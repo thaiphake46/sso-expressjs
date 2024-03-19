@@ -10,13 +10,16 @@
 <body>
   <h2>Register user free</h2>
   <form action="/auth/register" method="POST">
-    <% if (typeof error !== 'undefined') { %>
-    <p style="color: red;"><%= error %></p>
+    <% if (typeof error !=='undefined' ) { %>
+    <p style="color: red;">
+      <%= error %>
+    </p>
     <% } %>
 
     <div>
       <label for="username">Username</label><br />
       <input type="text" id="username" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" required />
+
     </div>
     <div>
       <label for="email">Email</label><br />

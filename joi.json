@@ -1,0 +1,56 @@
+{
+  "_original": {
+    "username": "a",
+    "email": "a",
+    "password": "a"
+  },
+  "details": [
+    {
+      "message": "\"username\" length must be at least 3 characters long",
+      "path": ["username"],
+      "type": "string.min",
+      "context": {
+        "limit": 3,
+        "value": "a",
+        "label": "username",
+        "key": "username"
+      }
+    },
+    {
+      "message": "\"email\" must be a valid email",
+      "path": ["email"],
+      "type": "string.email",
+      "context": {
+        "value": "a",
+        "invalids": ["a"],
+        "label": "email",
+        "key": "email"
+      }
+    },
+    {
+      "message": "\"password\" length must be at least 6 characters long",
+      "path": ["password"],
+      "type": "string.min",
+      "context": {
+        "limit": 6,
+        "value": "a",
+        "label": "password",
+        "key": "password"
+      }
+    }
+  ],
+  "error": [
+    {
+      "message": "\"username\" length must be at least 3 characters long",
+      "label": "username"
+    },
+    {
+      "message": "\"email\" must be a valid email",
+      "label": "email"
+    },
+    {
+      "message": "\"password\" length must be at least 6 characters long",
+      "label": "password"
+    }
+  ]
+}
